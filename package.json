@@ -1,0 +1,51 @@
+{
+  "name": "rev-launcher-express",
+  "version": "1.0.0",
+  "description": "rest api for rev launcher",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "serve": "nodemon --watch '../app/**/*.ts' --ignore './**/*.spec.ts' --exec 'ts-node' server.ts"
+  },
+  "repository": "",
+  "author": "ACP Consulting LLC",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/chai": "^3.4.32",
+   "@types/mocha": "^2.2.31",
+   "@types/node": "^6.0.38",
+   "@types/restify": "^2.0.30",
+   "@types/sinon": "^1.16.29",
+   "@types/stripe": "0.0.30",
+   "@types/stripe-checkout": "0.0.26",
+   "@types/stripe-node": "^4.6.4",
+   "@types/supertest": "^1.1.30",
+   "chai": "^3.5.0",
+   "codelyzer": "0.0.28",
+   "gulp": "^3.9.1",
+   "gulp-istanbul": "^1.0.0",
+   "gulp-mocha": "^3.0.0",
+   "gulp-tslint": "^6.0.2",
+   "gulp-typescript": "^2.13.4",
+   "inversify": "^2.0.0",
+   "inversify-binding-decorators": "^2.0.0",
+   "inversify-restify-utils": "^2.0.1",
+   "mocha": "^3.0.0",
+   "publish-please": "^2.1.4",
+   "reflect-metadata": "^0.1.8",
+   "run-sequence": "^1.2.0",
+   "sinon": "^1.17.4",
+   "source-map-support": "^0.4.0",
+   "stripe": "^4.10.0",
+   "supertest": "^2.0.0",
+   "tslint": "^3.12.0",
+   "typeorm": "0.0.2-alpha.62",
+   "typescript": "^2.0.3"
+  },
+  "dependencies": {
+    "mysql": "^2.11.1",
+   "reflect-metadata": "^0.1.8",
+   "restify": "^4.1.1",
+   "typeorm": "0.0.2-alpha.62"
+  }
+}

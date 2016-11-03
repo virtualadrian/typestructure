@@ -1,0 +1,26 @@
+{
+  "compilerOptions": {
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "module": "umd",
+    "target": "ES6",
+    "noImplicitAny": false,
+
+    "sourceMap": true,
+    "declaration": false,
+    "moduleResolution": "node",
+    "outDir": "./bin",
+    "noEmitHelpers": false,
+    "baseUrl": "./",
+    "paths": {
+      "library/*": ["src/library/*"],
+      "features/*": ["src/features/*"],
+      "ioc/*": ["src/_ioc/*"],
+      "data/*": ["src/_lib/data/*"]
+    }
+  },
+  "filesGlob": [
+    "**/*.ts",
+    "**/*.tsx"
+  ]
+}
