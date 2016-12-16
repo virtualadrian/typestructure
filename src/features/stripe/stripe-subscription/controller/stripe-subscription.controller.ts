@@ -1,5 +1,5 @@
 import * as restify from 'restify';
-import { ProvideController } from 'ioc/ioc.conf';
+import { ProvideController } from '../../../../_ioc/ioc.conf';
 import { Controller, Get, Post, TYPE } from 'inversify-restify-utils';
 
 

@@ -1,4 +1,4 @@
-import { inject, provide, apiConfig } from 'ioc/ioc.conf';
+import { inject, provide, apiConfig } from '../../../../_ioc/ioc.conf';
 import { StripeChargeRepository } from '../repository/stripe-charge.repository';
 import * as StripeApi from 'stripe';
 

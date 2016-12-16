@@ -1,4 +1,4 @@
-import { provide, apiConfig } from 'ioc/ioc.conf';
+import { provide, apiConfig } from '../../../../_ioc/ioc.conf';;
 
 import * as StripeApi from 'stripe';
 

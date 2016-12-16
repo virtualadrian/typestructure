@@ -1,6 +1,6 @@
 import * as restify from 'restify';
 import { inject } from 'inversify';
-import { ProvideController } from 'ioc/ioc.conf';
+import { ProvideController } from '../../../../_ioc/ioc.conf';
 import { Controller, Get, Post, Put, Delete, TYPE } from 'inversify-restify-utils';
 
 import { StripeAccountService } from '../service/stripe-account.service';

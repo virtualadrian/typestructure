@@ -1,10 +1,10 @@
 import * as restify from 'restify';
 import { inject } from 'inversify';
-import { ProvideController } from '../../../ioc/ioc.conf';
+import { ProvideController } from '../../../../_ioc/ioc.conf';
 import { Controller, Get, Post, Put, Delete, TYPE } from 'inversify-restify-utils';
 
 import { StripeChargeService } from '../service/stripe-charge.service';
-import { StripeChargeCreateRequest } from './.';
+import { StripeChargeCreateRequest } from '../model/';
 
 @Controller('/api/stripe/charge')
 @ProvideController(TYPE.Controller, 'StripeChargeController')

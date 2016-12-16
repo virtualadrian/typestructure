@@ -1,8 +1,8 @@
-import { inject, provide, apiConfig } from '../../../ioc/ioc.conf';
+import { inject, provide, apiConfig } from '../../../../_ioc/ioc.conf';
 import { UserRepository } from '../repository/user.repository';
 
 
-import { UserCreateRequest } from './';
+import { UserCreateRequest } from '../model/';
 
 @provide('UserService')
 export class UserService {

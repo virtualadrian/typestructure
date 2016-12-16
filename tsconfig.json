@@ -5,7 +5,6 @@
     "module": "umd",
     "target": "ES6",
     "noImplicitAny": false,
-
     "sourceMap": true,
     "declaration": false,
     "moduleResolution": "node",

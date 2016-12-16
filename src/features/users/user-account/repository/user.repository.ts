@@ -1,8 +1,8 @@
 import { Repository } from 'typeorm';
-import { provide, inject } from 'ioc/ioc.conf';
+import { provide, inject } from '../../../../_ioc/ioc.conf';
 
 import { User } from '../entity';
-import { TypestructureContext } from 'data/typestructure.context';
+import { TypestructureContext } from '../../../../_lib/data/typestructure.context';
 
 /**
  * User Repository type
