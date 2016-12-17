@@ -1,9 +1,9 @@
 import 'reflect-metadata';
-import { Kernel, inject } from 'inversify';
+import { Container, inject } from 'inversify';
 import { makeProvideDecorator, makeFluentProvideDecorator } from 'inversify-binding-decorators';
 
 // create kernel and default provider
-const kernel = new Kernel();
+const kernel = new Container();
 const provide = makeProvideDecorator(kernel);
 
 // create provside controller

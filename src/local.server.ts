@@ -3,10 +3,10 @@ import * as restify from 'restify';
 import { InversifyRestifyServer } from 'inversify-restify-utils';
 
 // get kernel config
-import { kernel } from './src/_ioc/ioc.conf';
+import { kernel } from './_ioc/ioc.conf';
 
 // import the loader for all features
-import './src/_ioc/ioc.loader';
+import './_ioc/ioc.loader';
 
 // create server and set up app
 const server = new InversifyRestifyServer(kernel);
