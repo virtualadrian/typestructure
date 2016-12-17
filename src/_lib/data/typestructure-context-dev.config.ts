@@ -1,6 +1,10 @@
 import { ConnectionOptions, DriverOptions } from 'typeorm';
+import {
+  User,
+  StoreRegistry
+} from  './index.entity';
 
-namespace TypeStructureConnectionOptions {
+export namespace TypeStructureConnectionOptions {
   /**
    * connection information - we will change this to come from
    * a configuration.
@@ -8,14 +12,14 @@ namespace TypeStructureConnectionOptions {
    * @private
    * @type {environmentOptions}
    */
-  export declare let Context: any;
+  export declare let Options: any;
 }
 
 /**
  * This should be replaced with an initialization service 
  * in the server.ts - Ideally loaded from KMS
  */
-TypeStructureConnectionOptions.Context = <ConnectionOptions>{
+TypeStructureConnectionOptions.Options = <ConnectionOptions>{
   driver: <DriverOptions>{
     type: 'mysql',
     host: '159.203.175.171',
@@ -26,5 +30,9 @@ TypeStructureConnectionOptions.Context = <ConnectionOptions>{
   },
   connection: {
     autoSchemaSync: false // WARNING: Could Drop DB if {True}
-  }
+  },
+  entities: [
+      User,
+      StoreRegistry
+  ]
 };

@@ -16,7 +16,8 @@
         "--debug-brk","53629",
         "--expose_debug_as", "v8debug"
       ],
-      "sourceMaps": true
+      "sourceMaps": true,
+      "preLaunchTask": "pre-debug-build"
     },
     {
       "type": "node",

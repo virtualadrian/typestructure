@@ -6,7 +6,7 @@ import { Controller, Get, Post, Put, Delete, TYPE } from 'inversify-restify-util
 import { StoreRegistryService } from '../service';
 import { StoreRegistryModel } from '../model';
 
-@Controller('/api/storeRegistry')
+@Controller('/api/store/registry')
 @ProvideController(TYPE.Controller, 'StoreRegistryController')
 export class StoreRegistryController {
 
