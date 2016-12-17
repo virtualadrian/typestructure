@@ -1,9 +1,8 @@
+import { provide, inject } from '../../_ioc/ioc.conf';
 import { ObjectLiteral } from 'typeorm/common/ObjectLiteral';
-import * as console from 'console';
 import { User } from './../../features/users/user-account/entity/user.entity';
 import { Application } from '../../application';
 import { ObjectType } from 'typeorm/common/ObjectType';
-import { provide } from '../../_ioc/ioc.conf';
 import {
   Connection,
   ConnectionManager,
@@ -11,107 +10,55 @@ import {
   DriverOptions,
   EntityManager,
   getConnectionManager,
-  Repository
+  Repository,
+  FindOptions
 } from 'typeorm';
-import { TypeStructureConnection } from './typestructure-context-dev.config';
+import { TypeStructureConnection } from './typestructure.connection';
 
+@provide('DbContext')
 export class DbContext<T> extends EntityManager {
 
   public connection: Connection;
 
-  private entityClass: ObjectType<T>;
-
-  constructor() {
+  constructor(private entityClass: ObjectType<T>) {
     super(TypeStructureConnection.Default);
+
+    if (TypeStructureConnection.Default) return;
+    getConnectionManager().createAndConnect(TypeStructureConnection.Options).then(async connection => {
+      TypeStructureConnection.Default = connection;
+    });
   }
-   find<Entity>(): Promise<{}[]> {
-     return super.find<T>(this.entityClass);
-   }
 
-   find<Entity>(condition: ObjectLiteral): Promise<{}[]> {
-     return super.find<T>(this.entityClass, condition);
-   }
+  async save(entity: T): Promise<T> {
+    return await this.connection.getRepository(this.entityClass).persist(entity);
+  }
 
-    /**
-     * Finds entities that match given conditions.
-     */
-    find<Entity>(entityClass: ObjectType<Entity>, conditions: ObjectLiteral): Promise<Entity[]> { 
+  async erase(entity: T): Promise<T|undefined> {
+    const repository = this.connection.getRepository(this.entityClass);
+    return await repository.findOne(entity).then(async existing => {
+      if (existing) {
+        return repository.remove(existing);
+      }
+    });
+  }
 
-    }
-    
-    /**
-     * Finds entities that match given conditions.
-     */
-    find<Entity>(entityClass: ObjectType<Entity>, options: FindOptions): Promise<Entity[]> { 
+  async find(conditions?: ObjectLiteral, options?: FindOptions): Promise<T[]> {
+    return await super.find<T>(this.entityClass, conditions, options);
+  }
 
-    }
+  async findOne(conditions?: ObjectLiteral, options?: FindOptions): Promise<T | undefined> {
+    return await super.findOne<T>(this.entityClass, conditions, options);
+  }
 
-    /**
-     * Finds entities that match given conditions.
-     */
-    find<Entity>(entityClass: ObjectType<Entity>, conditions: ObjectLiteral, options: FindOptions): Promise<Entity[]>;
+  async findOneById(id: any, options?: FindOptions): Promise<T | undefined> {
+    return await super.findOneById(this.entityClass, id, options);
+  }
 
-  // /**
-  //  * @param {string} entity
-  //  * @returns {Repository<any>}
-  //  * @memberOf TypestructureContext
-  //  */
-  // Execute<T>(entityClass: ObjectType<T>): Promise<Repository<T>> {
+  async findByIds(entityClass: ObjectType<T>, ids: any[], options?: FindOptions): Promise<T[]> {
+    return await super.findByIds(this.entityClass, ids, options);
+  }
 
-
-  //     // get Context Connection handle and request Repository
-  //     return await createConnection(DbContext.Options).then(async conn => {
-
-  //        return conn.getRepository(entityClass)
-  //     }).catch((err) => {
-  //         throw(err);
-  //     });
-  // }
+  async persistByName<T>(targetOrEntity: string, entity: T): Promise<T> {
+    return await super.persist<T>(targetOrEntity, entity);
+  }
 }
-
-// export class TypestructureData<T> {
-
-//   /**
-//    * Application level app context
-//    *
-//    * @private
-//    * @type {Connection}
-//    * @memberOf TypestructureContext
-//    */
-//   public Data: Repository<T>;
-
-//   private entityClass: ObjectType<T>;
-
-//   public static async Create<T>(entity: ObjectType<T>): TypestructureData<T> {
-//     return new TypestructureData<T>(await TypestructureContext.getRepository(entity));
-//   }
-
-//   constructor(public data: Repository<T>) {
-//     //this.DataRepository = async() => { return await TypestructureContext.getRepository<T>(this.entityClass); };
-//   }
-
-
-//   // /**
-//   //  * Gets the current DB Connection for the context
-//   //  * creates a new if falsy
-//   //  * @returns {Connection}
-//   //  */
-//   // async function getApiContextConnection(): Promise<Connection> {
-//   //   if (apiContextConnection) return apiContextConnection;
-//   //   return createConnection(TypeStructureConnectionOptions.Options)
-//   //       .then(async conn => { return conn; })
-//   //       .catch(err => Application.Catch(err));
-//   // }
-
-//   /**
-//    * @param {string} entity
-//    * @returns {Repository<any>}
-//    * @memberOf TypestructureContext
-//    */
-//   async getRepository(): Promise<Repository<T>> {
-//       // get Context Connection handle and request Repository
-//       return createConnection(TypeStructureConnectionOptions.Options).then(async conn => {
-//          return conn.getRepository(this.entityClass);
-//       });
-//   }
-// }

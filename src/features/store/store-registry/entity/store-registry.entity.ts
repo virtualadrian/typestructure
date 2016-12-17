@@ -5,7 +5,7 @@ import { Table, Column, PrimaryColumn } from 'typeorm';
 @Table('store_registry')
 export class StoreRegistry {
 
-  @PrimaryColumn('int')
+  @PrimaryColumn('int', { generated: true })
   public id: number;
 
   @Column()

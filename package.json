@@ -12,6 +12,7 @@
   "license": "ISC",
   "devDependencies": {
     "@types/chai": "^3.4.32",
+    "@types/lodash": "^4.14.43",
     "@types/mocha": "^2.2.31",
     "@types/node": "^6.0.38",
     "@types/restify": "^2.0.30",
@@ -44,9 +45,11 @@
     "typescript": "^2.0.3"
   },
   "dependencies": {
+    "lodash": "^4.17.2",
     "mysql": "^2.11.1",
     "reflect-metadata": "^0.1.8",
     "restify": "^4.1.1",
+    "stripe": "^4.14.0",
     "typeorm": "0.0.5"
   }
 }

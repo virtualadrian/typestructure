@@ -41,9 +41,9 @@ export class StoreRegistryController {
      * @memberOf StoreRegistry
      */
     @Delete('/')
-    public removeStoreRegistry(req: restify.Request, res: restify.Response): void {
+    public remove(req: restify.Request, res: restify.Response): void {
       // call service to get storeRegistry by id
-      this.registrySvc.remove(req.body);
+      this.registrySvc.remove(req.body).then(storeRegistry => res.send(storeRegistry));
     }
 
     /**

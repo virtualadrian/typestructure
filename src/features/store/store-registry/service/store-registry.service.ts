@@ -1,3 +1,5 @@
+import { StoreRegistry } from './../entity/store-registry.entity';
+import * as _ from 'lodash';
 import { inject, provide, apiConfig } from '../../../../_ioc/ioc.conf';
 import { StoreRegistryRepository } from '../repository';
 import { StoreRegistryModel } from '../model';
@@ -43,7 +45,7 @@ export class StoreRegistryService {
    * 
    * @memberOf StoreRegistryService
    */
-  public createOrUpdate(storeRegistryModel: any): Promise<any> {
+  public createOrUpdate(storeRegistryModel: StoreRegistryModel): Promise<any> {
     return this.storeRegistryRepository.createOrUpdate(storeRegistryModel);
   }
 
@@ -54,7 +56,7 @@ export class StoreRegistryService {
    * 
    * @memberOf StoreRegistryService
    */
-  public remove(storeRegistryModel: any): void {
-    this.storeRegistryRepository.remove(storeRegistryModel);
+  public remove(storeRegistryModel: StoreRegistryModel): Promise<any> {
+    return this.storeRegistryRepository.remove(storeRegistryModel);
   }
 }
