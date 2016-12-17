@@ -69,7 +69,7 @@
       "allow-null-check"
     ],
     "use-strict": [
-      true,
+      false,
       "check-module"
     ],
 
