@@ -14,15 +14,23 @@ import { StoreRegistry } from '../entity';
 export class StoreRegistryRepository {
 
   /**
-   * Creates an instance of StoreRegistryRepository.
-   *
-   * @param {TypestructureContext} apiCtx
-   *
+   * ORM Repository for StoreRegistry
+   * 
+   * @private
+   * @type {Repository<StoreRegistry>}
    * @memberOf StoreRegistryRepository
    */
-  constructor(
-    @inject('TypestructureContext') private apiCtx: TypestructureContext
-  ) { }
+  private storeRegistry: Repository<StoreRegistry>
+
+  /**
+   * Creates an instance of StoreRegistryRepository.
+   * 
+   * 
+   * @memberOf StoreRegistryRepository
+   */
+  constructor() {
+    this.storeRegistry = TypestructureContext.getRepository(StoreRegistry);
+  }
 
   /**
    * Get a StoreRegistry from the database by id
@@ -33,10 +41,8 @@ export class StoreRegistryRepository {
    * @memberOf StoreRegistryRepository
    */
   public get(id: number): Promise<StoreRegistry> {
-    const StoreRegistry: Repository<StoreRegistry> = this.apiCtx.getRepository('StoreRegistry');
-
     // call to the database and return the promisified result
-    return StoreRegistry.findOne({ id: id });
+    return this.storeRegistry.findOne({ id: id });
   }
 
   /**
@@ -44,10 +50,8 @@ export class StoreRegistryRepository {
    * @param StoreRegistryModel
    */
   public remove(storeRegistryModel: any): void {
-    const storeRegistry: Repository<StoreRegistry> = this.apiCtx.getRepository('StoreRegistry');
-
     // call to the database and return the promisified result
-    storeRegistry.remove(storeRegistryModel);
+    this.storeRegistry.remove(storeRegistryModel);
   }
 
   /**
@@ -56,10 +60,8 @@ export class StoreRegistryRepository {
    * @memberOf StoreRegistryRepository
    */
   public getAll(): Promise<StoreRegistry[]> {
-    const storeRegistry: Repository<StoreRegistry> = this.apiCtx.getRepository('StoreRegistry');
-
     // call to the database and return the promisified result
-    return storeRegistry.find();
+    return this.storeRegistry.find();
   }
 
   /**
@@ -69,11 +71,6 @@ export class StoreRegistryRepository {
    * @returns {Promise<StoreRegistry[]>}
    */
   public createOrUpdate(storeRegistryModel: any): Promise<StoreRegistry[]>  {
-    const storeRegistry: Repository<StoreRegistry> = this.apiCtx.getRepository('StoreRegistry');
-
-    // call to the database and return the promisified result
-    let usr = storeRegistry.persist(storeRegistryModel);
-
-    return usr;
+    return this.storeRegistry.persist(storeRegistryModel);
   }
 }

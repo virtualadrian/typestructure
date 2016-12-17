@@ -1,15 +1,9 @@
+import { ObjectType } from 'typeorm/common/ObjectType';
 import { provide } from '../../_ioc/ioc.conf';
 import { Connection, createConnection, Repository, DriverOptions, ConnectionOptions } from 'typeorm';
 import { TypeStructureConnectionOptions } from './typestructure-context-dev.config';
 
-/**
- * TypestructureContext Context object to the database
- *
- * @export
- * @class TypestructureContext
- */
-@provide('TypestructureContext')
-export  class TypestructureContext {
+export namespace TypestructureContext {
 
   /**
    * Application level app context
@@ -18,24 +12,28 @@ export  class TypestructureContext {
    * @type {Connection}
    * @memberOf TypestructureContext
    */
-  private static apiCtx: Connection;
+  let apiContextConnection: Connection;
 
   /**
-   * Creates an instance of TypestructureContext.
-   * @memberOf TypestructureContext
+   * Gets the current DB Connection for the context
+   * creates a new if falsy
+   * @returns {Connection}
    */
-  constructor() {
-    if (TypestructureContext.apiCtx) return;
-
-    // create connection and set it for self
-    createConnection(TypeStructureConnectionOptions.Options)
-      .then((conn) => {
-        TypestructureContext.apiCtx = conn;
-      })
-      .catch(err => {
-        console.dir(err);
-        throw(err);
-      });
+  function getApiContextConnection(): Promise<Connection> {
+    return new Promise((resolve, reject) => {
+      // return existing connection immediately
+      if (apiContextConnection) resolve(apiContextConnection);
+      // create connection
+      createConnection(TypeStructureConnectionOptions.Options)
+        .then((conn) => {
+          apiContextConnection = conn;
+          resolve(apiContextConnection);
+        })
+        .catch(err => {
+          console.dir(err);
+          reject(err);
+        });
+    });
   }
 
   /**
@@ -43,7 +41,13 @@ export  class TypestructureContext {
    * @returns {Repository<any>}
    * @memberOf TypestructureContext
    */
-  public getRepository(entity: string): Repository<any> {
-    return TypestructureContext.apiCtx.getRepository(entity);
+  export function getRepository<T>(entityClass: ObjectType<T>): Promise<Repository<T>> {
+    return new Promise((resolve, reject) => {
+      // get Context Connection handle and request Repository
+      getApiContextConnection().then((apiCtxConn) => {
+        resolve(apiCtxConn.getRepository(entityClass));
+      })
+      .catch((err) => reject(err));
+    });
   }
 }

@@ -14,15 +14,24 @@ import { TypestructureContext } from '../../../../_lib/data/typestructure.contex
 export class UserRepository {
 
   /**
+   * TypeORM User Repository 
+   * 
+   * @private
+   * @type {User}
+   * @memberOf UserRepository
+   */
+  private user: Repository<User>;
+
+  /**
    * Creates an instance of UserRepository.
    *
    * @param {TypestructureContext} apiCtx
    *
    * @memberOf UserRepository
    */
-  constructor(
-    @inject('TypestructureContext') private apiCtx: TypestructureContext
-  ) { }
+  constructor() {
+    this.user = await TypestructureContext.getRepository(User);
+  }
 
   /**
    * Get a user from the database by id
@@ -33,10 +42,8 @@ export class UserRepository {
    * @memberOf UserRepository
    */
   public get(id: number): Promise<User> {
-    const user: Repository<User> = this.apiCtx.getRepository('User');
-
     // call to the database and return the promisified result
-    return user.findOne({ id: id });
+    return this.user.findOne({ id: id });
   }
 
   /**
@@ -44,10 +51,8 @@ export class UserRepository {
    * @param userModel
    */
   public remove(userModel: any): void {
-    const user: Repository<User> = this.apiCtx.getRepository('User');
-
     // call to the database and return the promisified result
-    user.remove(userModel);
+    this.user.remove(userModel);
   }
 
   /**
@@ -56,24 +61,17 @@ export class UserRepository {
    * @memberOf UserRepository
    */
   public getAll(): Promise<User[]> {
-    const user: Repository<User> = this.apiCtx.getRepository('User');
-
     // call to the database and return the promisified result
-    return user.find();
+    return this.user.find();
   }
 
   /**
    * create or update a user
-   * - this can be split into separate ops
+   * 
    * @param userModel
    * @returns {Promise<User[]>}
    */
   public createOrUpdate(userModel: any): Promise<User[]>  {
-    const user: Repository<User> = this.apiCtx.getRepository('User');
-
-    // call to the database and return the promisified result
-    let usr = user.persist(userModel);
-
-    return usr;
+    return this.user.persist(userModel);
   }
 }

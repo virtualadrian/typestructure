@@ -62,6 +62,4 @@ export class StoreRegistryController {
         this.registrySvc.getAll().then(storeRegistry => res.send(storeRegistry));
       }
     }
-
-
 }
