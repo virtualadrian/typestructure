@@ -1,0 +1,22 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: Simple Proxy Service with AWS SAM
+Resources:
+  ProxyFunction:
+    Properties:
+      CodeUri: s3://ts-restify-sam/api_backend.zip
+      Environment:
+        Variables:
+          CONN_STRING: SHOULD BE IN KMS
+      Events:
+        AnyResource:
+          Properties:
+            Method: any
+            Path: /{proxy+}
+          Type: Api
+      Handler: main.handler
+      MemorySize: 1024
+      Policies: AmazonS3FullAccess
+      Runtime: nodejs4.3
+      Timeout: 30
+    Type: AWS::Serverless::Function
+Transform: AWS::Serverless-2016-10-31

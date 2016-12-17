@@ -8,12 +8,15 @@ Resources:
       Handler: main.handler
       Runtime: nodejs4.3
       CodeUri: s3://ts-restify-sam/api_backend.zip
+      MemorySize: 1024
+      Timeout: 30
+      Policies: AmazonS3FullAccess
       Environment:
         Variables:
-          CONN_STRING: 'Bongs and Dildos'
+          CONN_STRING: 'SHOULD BE IN KMS'
       Events:
-        GetResource:
+        AnyResource:
           Type: Api
           Properties:
-            Path: /{}
-            Method: get
+            Path: /{proxy+}
+            Method: any

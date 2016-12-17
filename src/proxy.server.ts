@@ -19,4 +19,7 @@ server.setConfig((app) => {
   app.use(restify.bodyParser());
 });
 
-exports.handler = (event, context) => AwsLambdaProxy.proxy(server.build(), event, context);
+// exports.handler = (event, context) => AwsLambdaProxy.proxy(server.build(), event, context);
+
+// build and start listening on 9090
+server.build().listen(9090, 'localhost');

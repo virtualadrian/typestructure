@@ -9,7 +9,7 @@
       "type": "node",
       "request": "launch",
       "name": "Launch Program",
-      "program": "${workspaceRoot}/main.ts",
+      "program": "${workspaceRoot}/src/proxy.server.ts",
       "cwd": "${workspaceRoot}",
       "outFiles": ["${workspaceRoot}/bin/**/*.js"],
       "args":[
