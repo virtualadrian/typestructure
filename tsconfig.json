@@ -2,8 +2,10 @@
   "compilerOptions": {
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
-    "module": "umd",
-    "target": "ES6",
+    "lib": ["es6", "dom"],
+    "types": ["reflect-metadata"],
+    "module": "commonjs",
+    "target": "ES5",
     "noImplicitAny": false,
     "sourceMap": true,
     "declaration": false,

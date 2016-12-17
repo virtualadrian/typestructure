@@ -2,10 +2,10 @@ import { Table, Column, PrimaryColumn } from 'typeorm';
 /**
 	* The type StoreRegistry.
 	*/
-@Table('StoreRegistry')
+@Table('store_registry')
 export class StoreRegistry {
 
-  @PrimaryColumn('int', { generated: true })
+  @PrimaryColumn('int')
   public id: number;
 
   @Column()

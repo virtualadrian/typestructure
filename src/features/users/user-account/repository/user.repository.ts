@@ -2,7 +2,7 @@ import { Repository } from 'typeorm';
 import { provide, inject } from '../../../../_ioc/ioc.conf';
 
 import { User } from '../entity';
-import { TypestructureContext } from '../../../../_lib/data/typestructure.context';
+import { DbContext } from '../../../../_lib/data/typestructure.context';
 
 /**
  * User Repository type
@@ -30,7 +30,6 @@ export class UserRepository {
    * @memberOf UserRepository
    */
   constructor() {
-    this.user = await TypestructureContext.getRepository(User);
   }
 
   /**
@@ -43,7 +42,7 @@ export class UserRepository {
    */
   public get(id: number): Promise<User> {
     // call to the database and return the promisified result
-    return this.user.findOne({ id: id });
+    return null; // this.user.findOne({ id: id });
   }
 
   /**
@@ -52,7 +51,7 @@ export class UserRepository {
    */
   public remove(userModel: any): void {
     // call to the database and return the promisified result
-    this.user.remove(userModel);
+    // this.user.remove(userModel);
   }
 
   /**
@@ -62,7 +61,7 @@ export class UserRepository {
    */
   public getAll(): Promise<User[]> {
     // call to the database and return the promisified result
-    return this.user.find();
+    return null; // this.user.find();
   }
 
   /**
@@ -72,6 +71,6 @@ export class UserRepository {
    * @returns {Promise<User[]>}
    */
   public createOrUpdate(userModel: any): Promise<User[]>  {
-    return this.user.persist(userModel);
+    return null; // this.user.persist(userModel);
   }
 }

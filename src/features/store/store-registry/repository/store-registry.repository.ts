@@ -1,8 +1,9 @@
-import { Repository } from 'typeorm';
+import { StoreRegistry } from './../entity/store-registry.entity';
 import { provide, inject } from '../../../../_ioc/ioc.conf';
-import { TypestructureContext } from '../../../../_lib/data/typestructure.context';
-
+import { DbContext } from '../../../../_lib/data/typestructure.context';
+import { Connection, createConnection, Repository, DriverOptions, ConnectionOptions } from 'typeorm';
 import { StoreRegistry } from '../entity';
+
 
 /**
  * StoreRegistry Repository type
@@ -14,25 +15,6 @@ import { StoreRegistry } from '../entity';
 export class StoreRegistryRepository {
 
   /**
-   * ORM Repository for StoreRegistry
-   * 
-   * @private
-   * @type {Repository<StoreRegistry>}
-   * @memberOf StoreRegistryRepository
-   */
-  private storeRegistry: Repository<StoreRegistry>
-
-  /**
-   * Creates an instance of StoreRegistryRepository.
-   * 
-   * 
-   * @memberOf StoreRegistryRepository
-   */
-  constructor() {
-    this.storeRegistry = TypestructureContext.getRepository(StoreRegistry);
-  }
-
-  /**
    * Get a StoreRegistry from the database by id
    *
    * @param {number} id
@@ -40,18 +22,18 @@ export class StoreRegistryRepository {
    *
    * @memberOf StoreRegistryRepository
    */
-  public get(id: number): Promise<StoreRegistry> {
+  async get(id: number): Promise<StoreRegistry> {
     // call to the database and return the promisified result
-    return this.storeRegistry.findOne({ id: id });
+    return null; // (await TypestructureContext.get(StoreRegistry)).findOne({ id: id });
   }
 
   /**
    * Remove the StoreRegistry from the database
    * @param StoreRegistryModel
    */
-  public remove(storeRegistryModel: any): void {
+  async remove(storeRegistryModel: any) {
     // call to the database and return the promisified result
-    this.storeRegistry.remove(storeRegistryModel);
+    return null; //(await TypestructureContext.get(StoreRegistry)).remove(storeRegistryModel);
   }
 
   /**
@@ -59,9 +41,15 @@ export class StoreRegistryRepository {
    * @returns {Promise<StoreRegistry>}
    * @memberOf StoreRegistryRepository
    */
-  public getAll(): Promise<StoreRegistry[]> {
-    // call to the database and return the promisified result
-    return this.storeRegistry.find();
+  async getAll(): Promise<StoreRegistry[]> {
+
+    const em: DbContext<StoreRegistry> = new DbContext<StoreRegistry>();
+    em.find()
+    // return await createConnection(TypeStructureConnectionOptions.Options).then(async conn => {
+    //   let repo = conn.getRepository(StoreRegistry);
+    //   conn.entityManager
+    //   return repo.find();
+    // });
   }
 
   /**
@@ -70,7 +58,7 @@ export class StoreRegistryRepository {
    * @param storeRegistryModel
    * @returns {Promise<StoreRegistry[]>}
    */
-  public createOrUpdate(storeRegistryModel: any): Promise<StoreRegistry[]>  {
-    return this.storeRegistry.persist(storeRegistryModel);
+  async createOrUpdate(storeRegistryModel: any): Promise<StoreRegistry[]>  {
+    return null; //(await TypestructureContext.get(StoreRegistry)).persist(storeRegistryModel);
   }
 }

@@ -31,7 +31,7 @@ export class StoreRegistryService {
    * 
    * @memberOf StoreRegistryService
    */
-  public getAll(): Promise<any> {
+  async getAll(): Promise<any> {
     return this.storeRegistryRepository.getAll();
   }
 

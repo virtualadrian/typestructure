@@ -54,7 +54,7 @@ export class StoreRegistryController {
      * @memberOf StoreRegistryController
      */
     @Get('/:id?')
-    public getStoreRegistry(req: restify.Request, res: restify.Response): void {
+    async getStoreRegistry(req: restify.Request, res: restify.Response) {
       // call service to get storeRegistry by id
       if (req.params.id && !(req.params.id === '')) {
         this.registrySvc.get(Number(req.params.id)).then(storeRegistry => res.send(storeRegistry));
