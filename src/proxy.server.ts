@@ -1,6 +1,8 @@
+import { Server } from 'tls';
 import 'reflect-metadata';
 import * as restify from 'restify';
 import { InversifyRestifyServer } from 'inversify-restify-utils';
+import * as AwsLambdaProxy from 'aws-serverless-express'
 
 // get kernel config
 import { kernel } from './_ioc/ioc.conf';
@@ -17,8 +19,4 @@ server.setConfig((app) => {
   app.use(restify.bodyParser());
 });
 
-// build and start listening on 9090
-server.build().listen(9090, 'localhost');
-
-// log port
-console.log('APP LISTENTING ON: http://localhost:9090');
+exports.handler = (event, context) => AwsLambdaProxy.proxy(server.build(), event, context);

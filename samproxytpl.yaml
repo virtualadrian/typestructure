@@ -1,0 +1,19 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: Simple Proxy Service with AWS SAM
+Resources:
+  ProxyFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: main.handler
+      Runtime: nodejs4.3
+      CodeUri: s3://ts-restify-sam/api_backend.zip
+      Environment:
+        Variables:
+          CONN_STRING: 'Bongs and Dildos'
+      Events:
+        GetResource:
+          Type: Api
+          Properties:
+            Path: /{}
+            Method: get
