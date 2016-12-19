@@ -11,7 +11,6 @@
   "scripts": {
     "serve": "nodemon --watch '../app/**/*.ts' --ignore './**/*.spec.ts' --exec 'ts-node' server.ts",
     "start": "npm run serve",
-
     "config": "node configure.js",
     "local": "node -e \"require('./lambda.js').handler(require('./api-gateway-event.json'), {succeed: v => { console.log(v); process.exit(0); }}, (e, v) => { console.log(v); process.exit(1); })\"",
     "invoke-lambda": "aws lambda invoke --function-name AwsServerlessExpressFunction --region $npm_package_config_region --payload file://api-gateway-event.json lambda-invoke-response.json && cat lambda-invoke-response.json",
@@ -38,6 +37,7 @@
     "@types/lodash": "^4.14.43",
     "@types/mocha": "^2.2.31",
     "@types/node": "^6.0.38",
+    "@types/request": "0.0.36",
     "@types/restify": "^2.0.30",
     "@types/sinon": "^1.16.29",
     "@types/stripe": "0.0.32",
@@ -73,6 +73,7 @@
     "lodash": "^4.17.2",
     "mysql": "^2.11.1",
     "reflect-metadata": "^0.1.8",
+    "request": "^2.79.0",
     "restify": "^4.1.1",
     "stripe": "^4.14.0",
     "typeorm": "0.0.5"
