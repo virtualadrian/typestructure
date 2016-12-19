@@ -3,7 +3,7 @@ Description: Simple Proxy Service with AWS SAM
 Resources:
   ProxyFunction:
     Properties:
-      CodeUri: s3://ts-restify-sam/api_backend.zip
+      CodeUri: s3://tsslsinversify01/be8b3e0a007959a4d1910a4d35f163e9
       Environment:
         Variables:
           CONN_STRING: SHOULD BE IN KMS

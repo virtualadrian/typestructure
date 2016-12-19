@@ -39,8 +39,46 @@ export class ApiGatewayRestifyServer {
     this.controllers = container.getAll<interfaces.Controller>(TYPE.Controller);
     this.ControllerContext = {};
   }
-
   /**
+   * Build the server handlers dynamically per annotation
+   */
+  public build() {
+    for (let ctrlIdx = 0; ctrlIdx < this.controllers.length; ctrlIdx++) {
+      // pull controller metadata
+      let controllerMetadata: interfaces.ControllerMetadata = Reflect.getOwnMetadata(
+        METADATA_KEY.controller,
+        this.controllers[ctrlIdx].constructor
+      );
+
+      // break out if no controller metadata found
+      if (!controllerMetadata) break;
+
+      // pull method metadata
+      let methodMetadata: interfaces.ControllerMethodMetadata[] = Reflect.getOwnMetadata(
+        METADATA_KEY.controllerMethod,
+        this.controllers[ctrlIdx].constructor
+      );
+
+      // break out if no method metadata inside the controller
+      if (!methodMetadata) break;
+
+      this.ControllerContext[controllerMetadata.target.name] = {};
+
+      // traditional for is ugly, but far more performant 
+      for (let methodIdx = 0; methodIdx < methodMetadata.length; methodIdx++) {
+        // get route options from method and concatenate to Controller
+        let routeOptions: any = typeof methodMetadata[methodIdx].options === "string" ? { path: methodMetadata[methodIdx].options } : methodMetadata[methodIdx].options;
+
+        if (controllerMetadata.path !== "/") {
+          routeOptions.path = controllerMetadata.path + routeOptions.path;
+        }
+        this.ControllerContext[controllerMetadata.target.name][methodMetadata[methodIdx].method] =
+          this.handlerFactory(controllerMetadata.target.name, methodMetadata[methodIdx].key)
+      }
+    }
+  }
+
+/**
  * Factory function which will generate a dynamic handler for each 
  * controller method given the method:{ Name, HTTP Verb, and Uri Path }
  * 
@@ -86,45 +124,6 @@ export class ApiGatewayRestifyServer {
         return callback(err);
       }
     };
-  }
-
-  /**
-   * Build the server handlers dynamically per annotation
-   */
-  public build() {
-    for (let ctrlIdx = 0; ctrlIdx < this.controllers.length; ctrlIdx++) {
-      // pull controller metadata
-      let controllerMetadata: interfaces.ControllerMetadata = Reflect.getOwnMetadata(
-        METADATA_KEY.controller,
-        this.controllers[ctrlIdx].constructor
-      );
-
-      // break out if no controller metadata found
-      if (!controllerMetadata) break;
-
-      // pull method metadata
-      let methodMetadata: interfaces.ControllerMethodMetadata[] = Reflect.getOwnMetadata(
-        METADATA_KEY.controllerMethod,
-        this.controllers[ctrlIdx].constructor
-      );
-
-      // break out if no method metadata inside the controller
-      if (!methodMetadata) break;
-
-      this.ControllerContext[controllerMetadata.target.name] = {};
-
-      // traditional for is ugly, but far more performant 
-      for (let methodIdx = 0; methodIdx < methodMetadata.length; methodIdx++) {
-        // get route options from method and concatenate to Controller
-        let routeOptions: any = typeof methodMetadata[methodIdx].options === "string" ? { path: methodMetadata[methodIdx].options } : methodMetadata[methodIdx].options;
-
-        if (controllerMetadata.path !== "/") {
-          routeOptions.path = controllerMetadata.path + routeOptions.path;
-        }
-        this.ControllerContext[controllerMetadata.target.name][methodMetadata[methodIdx].method] =
-          this.handlerFactory(controllerMetadata.target.name, methodMetadata[methodIdx].key)
-      }
-    }
   }
 }
 

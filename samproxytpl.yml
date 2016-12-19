@@ -7,7 +7,6 @@ Resources:
     Properties:
       Handler: main.handler
       Runtime: nodejs4.3
-      CodeUri: s3://ts-restify-sam/api_backend.zip
       MemorySize: 1024
       Timeout: 30
       Policies: AmazonS3FullAccess
